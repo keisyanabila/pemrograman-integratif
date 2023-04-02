@@ -140,7 +140,6 @@ function deletePassenger() {
 
 
 function mainMenu() {
-  console.log(`\nPilih operasi yang ingin dilakukan:`);
   console.log(`1. Add Passenger`);
   console.log(`2. Find Passenger`);
   console.log(`3. Change Passenger Details`);
@@ -157,16 +156,6 @@ function mainMenu() {
       rl.close();
     }
   };
-  
-  // mainMenu();
-  // rl.question('How can we help you : ', (option) => {
-  //   const selectedOption = options[option];
-  //   if (selectedOption) {
-  //     selectedOption();
-  //   } else {
-  //     console.log('invalid');
-  //   }
-  // });
 
   function handleOption(option) {
   const selectedOption = options[option];
