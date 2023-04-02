@@ -1,6 +1,10 @@
 const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 const sqlite3 = require('sqlite3').verbose();
+const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
+const crudProto = grpc.loadPackageDefinition(packageDefinition).crud;
+const server = new grpc.Server();
+const db = new sqlite3.Database('./data.db');
 
 const packageDefinition = protoLoader.loadSync('./passenger.proto', {
   keepCase: true,
@@ -9,12 +13,6 @@ const packageDefinition = protoLoader.loadSync('./passenger.proto', {
   defaults: true,
   oneofs: true
 });
-
-const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
-
-const crudProto = grpc.loadPackageDefinition(packageDefinition).crud;
-const server = new grpc.Server();
-const db = new sqlite3.Database('./data.db');
 
   server.addService(crudProto.CrudService.service, {
     createPassenger: createPassenger,
