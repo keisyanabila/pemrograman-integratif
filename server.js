@@ -1,7 +1,6 @@
 const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 const sqlite3 = require('sqlite3').verbose();
-const Passenger = [];
 
 const packageDefinition = protoLoader.loadSync('./passenger.proto', {
   keepCase: true,
@@ -17,16 +16,11 @@ const crudProto = grpc.loadPackageDefinition(packageDefinition).crud;
 const server = new grpc.Server();
 const db = new sqlite3.Database('./data.db');
 
-// db.serialize(() => {
-//   db.run("CREATE TABLE IF NOT EXISTS Passenger (bookingID INTEGER PRIMARY KEY,name TEXT NOT NULL,address TEXT NOT NULL,phonenumber INTEGER NOT NULL, email INTEGER NOT NULL)");
-
   server.addService(crudProto.CrudService.service, {
     createPassenger: createPassenger,
     readPassenger: readPassenger,
     updatePassenger: updatePassenger,
     deletePassenger: deletePassenger
-  });
-// });
 
 //CREATE
 function createPassenger(call, callback) {
@@ -41,16 +35,6 @@ function createPassenger(call, callback) {
     callback(null, passenger);
   });
 }
-// function createPassenger(call, callback) {
-//   const { name, address, phonenumber, email } = call.request;
-//   db.run(`INSERT INTO Passenger (name, address, phonenumber, email) VALUES (?, ?, ?, ?)`, [name, address, phonenumber, email], function(err) {
-//     if (err) {
-//       return callback(err);
-//     }
-//     const id = this.lastID;
-//     callback(null, { bookingID, name, address, phonenumber, email });
-//   });
-// }
 
 //READ
 function readPassenger(call, callback) {
