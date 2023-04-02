@@ -1,6 +1,9 @@
 const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 const readline = require('readline');
+const crudProto = grpc.loadPackageDefinition(packageDefinition).crud;
+const client = new crudProto.CrudService('localhost:50051', grpc.credentials.createInsecure());
+
 
 const packageDefinition = protoLoader.loadSync('./passenger.proto', {
   keepCase: true,
@@ -9,9 +12,6 @@ const packageDefinition = protoLoader.loadSync('./passenger.proto', {
   defaults: true,
   oneofs: true
 });
-
-const crudProto = grpc.loadPackageDefinition(packageDefinition).crud;
-const client = new crudProto.CrudService('localhost:50051', grpc.credentials.createInsecure());
 
 const rl = readline.createInterface({
   input: process.stdin,
