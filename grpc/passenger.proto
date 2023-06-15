@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package crud;
+
+message Passenger {
+  int32 bookingID = 1;
+  string name = 2;
+  string address = 3;
+  string phonenumber = 4;
+  string email = 5;
+}
+
+service CrudService {
+  rpc CreatePassenger(Passenger) returns (Passenger) {}
+  rpc ReadPassenger(Passenger) returns (Passenger) {}
+  rpc UpdatePassenger(Passenger) returns (Passenger) {}
+  rpc DeletePassenger(Passenger) returns (Passenger) {}
+}
